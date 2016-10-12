@@ -1,0 +1,18 @@
+<table class="table table-striped">
+  <thead class="thead-inverse">
+    <tr>
+      <th>#</th>
+      <th ng-repeat="(key, value) in foundItems[0]">{{key}}</th>
+      <th>remove</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="item in foundItems">
+      <th scope="row">{{$index + 1}}</th>
+      <td ng-repeat="(key, value) in item">{{value}}</td>
+      <td>
+        <button ng-click="onRemove($index)" class="btn btn-primary">Don't want this one!</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
