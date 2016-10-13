@@ -19,10 +19,12 @@
         controller.found = [];
         controller.loading = false;
         controller.itemsDisplayedAs = 'list'
+        controller.isInitiated = false;
 
         controller.error = MenuSearchService.hasError()
         controller.doQuery = function() {
             controller.loading = true;
+            controller.isInitiated = true;
             MenuSearchService.query(controller.phrase)
                 .then(function(result) {
                     controller.found = result;

@@ -37,8 +37,8 @@
                     <items-loader-indicator ng-show="query.loading"></items-loader-indicator>
 
                     <!-- found-items should be implemented as a component -->
-                    <found-items found-items="query.found" on-remove="query.remove" ng-if="query.itemsDisplayedAs == 'list'"></found-items>
-                    <found-items-table found-items="query.found" on-remove="query.remove" ng-if="query.itemsDisplayedAs == 'table'"></found-items-table>
+                    <found-items found-items="query.found" on-remove="query.remove" ng-if="query.itemsDisplayedAs == 'list' && !query.loading && query.isInitiated"></found-items>
+                    <found-items-table found-items="query.found" on-remove="query.remove" ng-if="query.itemsDisplayedAs == 'table' && !query.loading && query.isInitiated"></found-items-table>
                 </div>
             </div>
 
