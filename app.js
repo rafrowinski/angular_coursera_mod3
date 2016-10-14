@@ -36,31 +36,35 @@
         }
     };
 
-    MenuSearchService.$inject = ['$http', '$filter', 'menuJsonUrl'];
+    MenuSearchService.$inject = ['$http', '$filter', 'menuJsonUrl', '$q'];
 
-    function MenuSearchService($http, $filter, menuJsonUrl) {
+    function MenuSearchService($http, $filter, menuJsonUrl, $q) {
         var service = this;
         var error = false;
 
         service.query = function(phrase) {
-            return $http({
-                method: 'GET',
-                url: (menuJsonUrl)
-            }).then(function successCallback(response) {
-                var menuItems = response.data.menu_items;
-                var matchingItems = $filter('filter')(menuItems, {
-                    'description': phrase
+            if (phrase) {
+                return $http({
+                    method: 'GET',
+                    url: (menuJsonUrl)
+                }).then(function successCallback(response) {
+                    var menuItems = response.data.menu_items;
+                    var matchingItems = $filter('filter')(menuItems, {
+                        'description': phrase
+                    });
+                    error = false;
+
+                    return matchingItems;
+                }, function errorCallback(response) {
+                    error = true;
+
+                    return {
+                        'error': 'an unexpecteed error ocurred'
+                    };
                 });
-                error = false;
-
-                return matchingItems;
-            }, function errorCallback(response) {
-                error = true;
-
-                return {
-                    'error': 'an unexpecteed error ocurred'
-                };
-            });
+            } else {
+                return $q.when([]);
+            }
         };
 
         service.hasError = function() {
@@ -75,8 +79,8 @@
             templateUrl: listTemplate,
             restrict: 'E',
             scope: {
-                foundItems: '<foundItems',
-                onRemove: '=onRemove'
+                foundItems: '<',
+                onRemove: '='
             }
         };
 
@@ -90,8 +94,8 @@
             templateUrl: tableTemplate,
             restrict: 'E',
             scope: {
-                foundItems: '<foundItems',
-                onRemove: '=onRemove'
+                foundItems: '<',
+                onRemove: '='
             }
         };
 
